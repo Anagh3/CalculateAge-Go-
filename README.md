@@ -86,7 +86,7 @@ Server should start on port 3000:
 
 INFO    🚀 Server running {"port": "3000"}
 
-Open your browser or Postman and check:
+Open your browser or any API testing tool (e.g., Postman, Insomnia, Hoppscotch) and check:
 
 http://localhost:3000/users
 
