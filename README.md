@@ -1,9 +1,7 @@
 Go Backend User Management API
-==============================
 
 This is a simple Go backend application to manage users with CRUD operations.
-It uses Fiber as the web framework, MySQL as the database, Validator for input
-validation, and Zap for structured logging.
+It uses Fiber as the web framework, MySQL as the database, Validator for input validation, and Zap for structured logging.
 
 Features
 --------
@@ -55,7 +53,7 @@ DB_PASS=your_mysql_password
 DB_HOST=127.0.0.1:3306
 DB_NAME=userdb
 
-> Replace the values with your MySQL credentials.
+Replace the values with your MySQL credentials.
 
 3. Install dependencies
 ----------------------
@@ -63,11 +61,7 @@ go mod tidy
 
 4. Create MySQL database and table
 ----------------------------------
-Log in to MySQL:
-
 mysql -u root -p
-
-Create the database and table:
 
 CREATE DATABASE userdb;
 USE userdb;
@@ -82,42 +76,40 @@ CREATE TABLE IF NOT EXISTS users (
 -----------------
 go run main.go
 
-Server should start on port 3000:
-
+You should see:
 INFO    🚀 Server running {"port": "3000"}
 
-Open your browser or any API testing tool (e.g., Postman, Insomnia, Hoppscotch) and check:
-
+Visit:
 http://localhost:3000/users
 
 API Endpoints
 -------------
-Method  Endpoint         Description
-------  --------------- ---------------------------------
-POST    /users           Create a new user
-GET     /users           Get all users
-GET     /users/:id       Get user by ID
-PUT     /users/:id       Update user by ID
-DELETE  /users/:id       Delete user by ID
+Method   Endpoint         Description
+------   ---------------  ---------------------------------
+POST     /users           Create a new user
+GET      /users           Get all users
+GET      /users/:id       Get user by ID
+PUT      /users/:id       Update user by ID
+DELETE   /users/:id       Delete user by ID
 
-Example: Create User
--------------------
+Example Requests
+----------------
+
+Create User
 POST /users
-Content-Type: application/json
 
 {
   "name": "John Doe",
   "dob": "1998-10-26"
 }
 
-Example: Get User by ID
------------------------
+Get User by ID
 GET /users/1
 
 Logging
 -------
-All logs are handled by Uber Zap. Example:
-
+All logs are handled by Uber Zap.
+Example:
 INFO    🚀 Server running {"port": "3000"}
 
 Validation
@@ -129,7 +121,5 @@ All user inputs are validated using go-playground/validator:
 
 Testing
 -------
-Unit tests for service logic:
-
+To run unit tests for service logic:
 go test ./internal/service -v
-
