@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"log"
+	"os"
 
 	"github.com/Anagh3/go-backend/internal/handlers"
 	"github.com/Anagh3/go-backend/internal/logger"
@@ -17,26 +18,40 @@ import (
 )
 
 func main() {
+	// Read DB credentials from environment variables
+	dbUser := os.Getenv("DB_USER")
+	dbPass := os.Getenv("DB_PASS")
+	dbHost := os.Getenv("DB_HOST")
+	dbName := os.Getenv("DB_NAME")
+
+	if dbUser == "" || dbPass == "" || dbHost == "" || dbName == "" {
+		log.Fatal("Database environment variables not set")
+	}
+
+	dsn := dbUser + ":" + dbPass + "@tcp(" + dbHost + ")/" + dbName + "?parseTime=true"
+
 	// DB connection
-	db, err := sql.Open("mysql", "root:anagh112@tcp(127.0.0.1:3306)/userdb?parseTime=true")
+	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
 
-	// Logger, validator
+	// Logger and validator
 	logr := logger.NewLogger()
 	validate := validator.New()
 
 	// Layers
 	repo := repository.NewUserRepository(db)
-	service := service.NewUserService(repo)
-	handler := handlers.NewUserHandler(service, validate, logr)
+	svc := service.NewUserService(repo)
+	handler := handlers.NewUserHandler(svc, validate, logr)
 
 	// Fiber app
 	app := fiber.New()
 	routes.SetupUserRoutes(app, handler)
 
 	logr.Info("🚀 Server running", zap.String("port", "3000"))
-	app.Listen(":3000")
+	if err := app.Listen(":3000"); err != nil {
+		logr.Fatal("Failed to start server", zap.Error(err))
+	}
 }
