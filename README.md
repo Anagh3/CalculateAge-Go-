@@ -86,6 +86,10 @@ Server should start on port 3000:
 
 INFO    🚀 Server running {"port": "3000"}
 
+Open your browser or Postman and check:
+
+http://localhost:3000/users
+
 API Endpoints
 -------------
 Method  Endpoint         Description
