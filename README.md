@@ -43,8 +43,8 @@ Setup Instructions
 
 1. Clone the repository
 -----------------------
-git clone https://github.com/YourUsername/YourRepo.git
-cd YourRepo
+git clone https://github.com/Anagh3/CalculateAge-Go-.git
+cd CalculateAge-Go-
 
 2. Create .env file
 ------------------
